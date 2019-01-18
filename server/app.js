@@ -1,19 +1,23 @@
-const express = require('express');
-const session = require('express-session');
-const mongoSessionStore = require('connect-mongo');
-const next = require('next');
-const mongoose = require('mongoose');
-const auth = require('./google');
+const express = require("express");
+const session = require("express-session");
+const mongoSessionStore = require("connect-mongo");
+const next = require("next");
+const mongoose = require("mongoose");
 
-require('dotenv').config();
+const api = require("./api");
 
-const dev = process.env.NODE_ENV !== 'production';
-const MONGO_URL = process.env.MONGO_URL_TEST;
+require("dotenv").config();
 
-mongoose.connect(MONGO_URL, { useNewUrlParser: true });
+const dev = process.env.NODE_ENV !== "production";
 
 const port = process.env.PORT || 8000;
-const ROOT_URL = dev ? `http://localhost:${port}` : 'https://mydomain.com';
+const ROOT_URL = dev ? `http://localhost:${port}` : "https://mydomain.com";
+const MONGO_URL = dev ? process.env.MONGO_URL_TEST : process.env.MONGO_URL;
+
+mongoose.connect(
+  MONGO_URL,
+  { useNewUrlParser: true }
+);
 
 const sessionSecret = process.env.SESSION_SECRET;
 
@@ -24,31 +28,41 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  server.use(express.json());
+
+  server.get("/_next/*", (req, res) => {
+    handle(req, res);
+  });
+
+  server.get("/static/*", (req, res) => {
+    handle(req, res);
+  });
+
   // confuring MongoDB session store
   const MongoStore = mongoSessionStore(session);
   const sess = {
-    name: 'builderbook.sid',
+    name: "leaderboard.sid",
     secret: sessionSecret,
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
-      ttl: 14 * 24 * 60 * 60, // save session 14 days
+      ttl: 14 * 24 * 60 * 60 // save session 14 days
     }),
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      maxAge: 14 * 24 * 60 * 60 * 1000,
-    },
+      maxAge: 14 * 24 * 60 * 60 * 1000
+    }
   };
 
   server.use(session(sess));
 
-  auth({ server, ROOT_URL });
+  api(server);
 
-  server.get('*', (req, res) => handle(req, res));
+  server.get("*", (req, res) => handle(req, res));
 
   // starting express server
-  server.listen(port, (err) => {
+  server.listen(port, err => {
     if (err) throw err;
     console.log(`> Ready on ${ROOT_URL}`); // eslint-disable-line no-console
   });

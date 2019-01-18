@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const _ = require('lodash');
+const mongoose = require("mongoose");
+const _ = require("lodash");
 
 const { Schema } = mongoose;
 
@@ -7,53 +7,66 @@ const mongoSchema = new Schema({
   googleId: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   googleToken: {
     access_token: String,
-    refresh_token: String,
+    refresh_token: String
   },
   createdAt: {
     type: Date,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
-  isAdmin: {
+  isReferee: {
     type: Boolean,
-    default: false,
+    default: false
   },
   displayName: String,
   avatarUrl: String,
 
   isGithubConnected: {
     type: Boolean,
-    default: false,
+    default: false
   },
   githubAccessToken: {
-    type: String,
+    type: String
   },
   purchasedBookIds: [String],
-  freeBookIds: [String],
+  freeBookIds: [String]
 });
 
 class UserClass {
   // User's public fields
   static publicFields() {
-    return ['id', 'displayName', 'email', 'avatarUrl', 'isAdmin', 'isGithubConnected'];
+    return [
+      "id",
+      "displayName",
+      "email",
+      "avatarUrl",
+      "isReferee",
+      "isGithubConnected"
+    ];
   }
 
   static async signInOrSignUp({
-    googleId, email, googleToken, displayName, avatarUrl,
+    googleId,
+    email,
+    googleToken,
+    displayName,
+    avatarUrl
   }) {
-    const user = await this.findOne({ googleId }).select(UserClass.publicFields().join(' '));
+    const user = await this.findOne({ googleId }).select(
+      UserClass.publicFields().join(" ")
+    );
 
     if (user) {
       const modifier = {};
-      
+
       if (googleToken.accessToken) {
         modifier.access_token = googleToken.accessToken;
       }
@@ -77,7 +90,7 @@ class UserClass {
       email,
       googleToken,
       displayName,
-      avatarUrl,
+      avatarUrl
     });
 
     return _.pick(newUser, UserClass.publicFields());
@@ -86,7 +99,6 @@ class UserClass {
 
 mongoSchema.loadClass(UserClass);
 
-const User = mongoose.model('User', mongoSchema);
+const User = mongoose.model("User", mongoSchema);
 
 module.exports = User;
-

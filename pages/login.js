@@ -40,14 +40,13 @@ class Login extends Component {
     return (
       <div style={{ textAlign: "center", margin: "0 20px" }}>
         <Head>
-          <title>Log in to Builder Book</title>
-          <meta name="description" content="Login page for builderbook.org" />
+          <title>Log in to Leader Board</title>
+          <meta name="description" content="Login page for leaderboard" />
         </Head>
         <br />
         <p style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}>
           Log in
         </p>
-        <p>You’ll be logged in for 14 days unless you log out manually.</p>
         <div className="login">
           <form onSubmit={this.handleSubmit}>
             <label htmlFor="username">GitHub username</label>
@@ -67,7 +66,7 @@ class Login extends Component {
             </p>
           </form>
         </div>
-        <style jsx>{`
+        <style jsx="true">{`
           .login {
             max-width: 340px;
             margin: 0 auto;
@@ -102,20 +101,6 @@ class Login extends Component {
             display: block;
           }
         `}</style>
-
-        <br />
-        <Button
-          variant="contained"
-          style={styleLoginButton}
-          href="/auth/google"
-        >
-          <img
-            src="https://storage.googleapis.com/builderbook/G.svg"
-            alt="Log in with Google"
-            style={{ marginRight: "10px" }}
-          />
-          Log in with Google
-        </Button>
       </div>
     );
   }
