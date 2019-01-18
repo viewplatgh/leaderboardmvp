@@ -1,0 +1,63 @@
+{
+  "name": "builderbook-boilerplate",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "build": "next build",
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js --watch server",
+    "now": "now && now alias && now rm builderbook-boilerplate --safe --yes",
+    "lint": "eslint components pages lib server",
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "coverageDirectory": "./.coverage"
+  },
+  "dependencies": {
+    "@material-ui/core": "^3.2.2",
+    "@zeit/next-css": "^1.0.1",
+    "connect-mongo": "^2.0.1",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "googleapis": "^34.0.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.4",
+    "next": "^7.0.2",
+    "next-cookies": "^1.0.4",
+    "nprogress": "^0.2.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-jss": "^8.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.0-beta.6",
+    "babel-polyfill": "^6.26.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "file-loader": "^3.0.1",
+    "jest": "^23.6.0",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.15.3",
+    "redux-devtools-extension": "^2.13.7",
+    "regenerator-runtime": "^0.13.1",
+    "url-loader": "^1.1.2"
+  }
+}

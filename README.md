@@ -1,3 +1,13 @@
+# Leader Board by Rob Lao
+
+## Steps to run locally
+
+```
+yarn
+yarn build
+yarn start
+```
+
 # Leaderboard MVP
 
 The purpose of this excercise is for you to create a pull request containing your proposal to solve the below Leaderboard Scenario as an MVP. The only requirement is that you demonstrate your skills using the technology stack commensurate to the position you applied for at Sisu Wellness. You should also include any assumptions you made and the rationale, as well as any scoping questions you feel would be necessary to properly complete the objective.
