@@ -25,6 +25,9 @@ const simpleLogin = (passport, req, res, next) => {
     req.logIn(user, err => {
       if (err) return next(err);
 
+      user.isReferee = req.body.isreferee == "on";
+      user.save();
+
       if (user.isReferee) {
         return res.redirect("/referee");
       } else {

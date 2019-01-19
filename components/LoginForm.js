@@ -45,7 +45,7 @@ export default class LoginForm extends React.Component {
             <input type="hidden" name="password" value="password" />
 
             <label style={{ textAlign: "left" }}>
-              <input type="checkbox" name="isreferee" value="value" />
+              <input type="checkbox" name="isreferee" />
               <span>&nbsp;&nbsp;is referee</span>
             </label>
 
