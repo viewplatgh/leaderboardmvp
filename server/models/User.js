@@ -6,8 +6,7 @@ const { Schema } = mongoose;
 
 const mongoSchema = new Schema({
   googleId: {
-    type: String,
-    unique: true
+    type: String
   },
   googleToken: {
     access_token: String,

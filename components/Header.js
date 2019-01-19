@@ -35,7 +35,14 @@ function Header({ user }) {
               <div>
                 <Hidden smDown>
                   <Link prefetch href="/">
-                    <a style={{ marginRight: "20px" }}>Settings</a>
+                    <a
+                      style={{ marginRight: "20px" }}
+                      href={user.isReferee ? "/referee" : "/competitor"}
+                    >
+                      {user.isReferee
+                        ? "Referee Dashboard"
+                        : "Competitor Dashboard"}
+                    </a>
                   </Link>
                 </Hidden>
               </div>
@@ -64,6 +71,7 @@ function Header({ user }) {
                     options={optionsMenu}
                     src={user.avatarUrl}
                     alt="Leader Board"
+                    displayName={user.displayName}
                   />
                 ) : null}
               </div>

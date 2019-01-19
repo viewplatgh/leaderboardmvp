@@ -27,12 +27,13 @@ class MenuDrop extends React.Component {
   };
 
   render() {
-    const { options, src, alt } = this.props;
+    const { options, src, alt, displayName } = this.props;
 
     return (
       <div>
         <table style={{ float: "right" }}>
           <tr>
+            <td>Welcome! {displayName}</td>
             <td>
               {" "}
               <Avatar

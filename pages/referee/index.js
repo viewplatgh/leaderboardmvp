@@ -34,4 +34,7 @@ class Dashboard extends Component {
   }
 }
 
-export default withAuth(withLayout(Dashboard), { loginRequired: true });
+export default withAuth(withLayout(Dashboard), {
+  loginRequired: true,
+  refereeRequired: true
+});
