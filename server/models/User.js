@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const passportSimple = require("./plugins/simple");
 
 const { Schema } = mongoose;
 
 const mongoSchema = new Schema({
   googleId: {
     type: String,
-    required: true,
     unique: true
   },
   googleToken: {
@@ -19,13 +19,14 @@ const mongoSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
     unique: true
   },
   isReferee: {
     type: Boolean,
     default: false
   },
+  username: String,
+  password: String,
   displayName: String,
   avatarUrl: String,
 
@@ -35,69 +36,75 @@ const mongoSchema = new Schema({
   },
   githubAccessToken: {
     type: String
-  },
-  purchasedBookIds: [String],
-  freeBookIds: [String]
+  }
 });
 
-class UserClass {
-  // User's public fields
-  static publicFields() {
-    return [
-      "id",
-      "displayName",
-      "email",
-      "avatarUrl",
-      "isReferee",
-      "isGithubConnected"
-    ];
-  }
+mongoSchema.plugin(passportSimple, {
+  hashField: "password",
+  limitAttempts: 9,
+  lastLoginField: "lastLogin",
+  interval: 1000
+});
 
-  static async signInOrSignUp({
-    googleId,
-    email,
-    googleToken,
-    displayName,
-    avatarUrl
-  }) {
-    const user = await this.findOne({ googleId }).select(
-      UserClass.publicFields().join(" ")
-    );
+// class UserClass {
+//   // User's public fields
+//   static publicFields() {
+//     return [
+//       "id",
+//       "username",
+//       "displayName",
+//       "email",
+//       "avatarUrl",
+//       "isReferee",
+//       "isGithubConnected"
+//     ];
+//   }
 
-    if (user) {
-      const modifier = {};
+//   static async signInOrSignUp({
+//     googleId,
+//     email,
+//     googleToken,
+//     displayName,
+//     avatarUrl
+//   }) {
+//     const user = await this.findOne({ googleId }).select(
+//       UserClass.publicFields().join(" ")
+//     );
 
-      if (googleToken.accessToken) {
-        modifier.access_token = googleToken.accessToken;
-      }
+//     if (user) {
+//       const modifier = {};
 
-      if (googleToken.refreshToken) {
-        modifier.refresh_token = googleToken.refreshToken;
-      }
+//       if (googleToken.accessToken) {
+//         modifier.access_token = googleToken.accessToken;
+//       }
 
-      if (_.isEmpty(modifier)) {
-        return user;
-      }
+//       if (googleToken.refreshToken) {
+//         modifier.refresh_token = googleToken.refreshToken;
+//       }
 
-      await this.updateOne({ googleId }, { $set: modifier });
+//       if (_.isEmpty(modifier)) {
+//         return user;
+//       }
 
-      return user;
-    }
+//       await this.updateOne({ googleId }, { $set: modifier });
 
-    const newUser = await this.create({
-      createdAt: new Date(),
-      googleId,
-      email,
-      googleToken,
-      displayName,
-      avatarUrl
-    });
+//       return user;
+//     }
 
-    return _.pick(newUser, UserClass.publicFields());
-  }
-}
+//     const newUser = await this.create({
+//       createdAt: new Date(),
+//       googleId,
+//       email,
+//       googleToken,
+//       displayName,
+//       avatarUrl
+//     });
 
-mongoSchema.loadClass(UserClass);
+//     return _.pick(newUser, UserClass.publicFields());
+//   }
+// }
+
+// mongoSchema.loadClass(UserClass);
 
 const User = mongoose.model("User", mongoSchema);
 

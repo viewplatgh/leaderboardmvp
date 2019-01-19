@@ -5,12 +5,10 @@ const dev = process.env.NODE_ENV !== "production";
 const router = express.Router();
 
 router.use((req, res, next) => {
-  if (!req.user || !req.user.isReferee) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
+  if (req.isAuthenticated() && req.user && req.user.isReferee) {
+    return next();
   }
-
-  next();
+  res.status(401).json({ error: "Unauthorized" });
 });
 
 router.get("/leaderboards", async (req, res) => {

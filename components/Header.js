@@ -43,7 +43,7 @@ function Header({ user }) {
               <Link prefetch href="/">
                 <a>
                   <Avatar
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMZLuLWToV4gheFG6M5moYmZjGq_mhmSFBKMexFuAakayI3zxv"
+                    src="/logo.jpg"
                     alt="Leader board"
                     style={{ margin: "0px auto 0px 20px" }}
                   />
@@ -52,7 +52,9 @@ function Header({ user }) {
             )}
           </Grid>
           <Grid item sm={7} xs={8} style={{ textAlign: "left" }}>
-            <h2>Leader Board by Rob</h2>
+            <h2>
+              <a href="/">Leader Board by Rob</a>
+            </h2>
           </Grid>
           <Grid item sm={4} xs={3} style={{ textAlign: "right" }}>
             {user ? (

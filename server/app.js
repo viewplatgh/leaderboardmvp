@@ -1,10 +1,16 @@
 const express = require("express");
 const session = require("express-session");
+const passport = require("passport");
+const bodyParser = require("body-parser");
 const mongoSessionStore = require("connect-mongo");
 const next = require("next");
 const mongoose = require("mongoose");
-
+const _ = require("lodash");
+const { parse } = require("url");
+const { join } = require("path");
 const api = require("./api");
+const { simpleLogin } = require("./utils/simpleLogin");
+const User = require("./models/User");
 
 require("dotenv").config();
 
@@ -57,10 +63,48 @@ app.prepare().then(() => {
 
   server.use(session(sess));
 
-  api(server);
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+  passport.use("simple-login", User.createStrategy());
 
-  server.get("*", (req, res) => handle(req, res));
+  server.use(passport.initialize());
+  server.use(passport.session());
+  server.use(bodyParser.urlencoded({ extended: false }));
+  server.use(bodyParser.json());
 
+  api(server, passport);
+
+  server.post("/login", (req, res, next) => {
+    simpleLogin(passport, req, res, next);
+  });
+
+  server.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/login");
+  });
+
+  const URL_MAP = {
+    "/login": "/public/login"
+  };
+
+  const STATIC_FILES = [
+    "/robots.txt",
+    "/sitemap.xml",
+    "/favicon.ico",
+    "/logo.jpg"
+  ];
+
+  server.get("*", (req, res) => {
+    const parsedUrl = parse(req.url, true);
+    if (_.has(URL_MAP, req.path)) {
+      app.render(req, res, URL_MAP[req.path]);
+    } else if (STATIC_FILES.indexOf(parsedUrl.pathname) > -1) {
+      const path = join(__dirname, "../static", parsedUrl.pathname);
+      app.serveStatic(req, res, path);
+    } else {
+      handle(req, res);
+    }
+  });
   // starting express server
   server.listen(port, err => {
     if (err) throw err;

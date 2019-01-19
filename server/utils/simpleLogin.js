@@ -1,0 +1,39 @@
+const simpleLoginApi = (passport, req, res, next) => {
+  passport.authenticate("simple-login", (err, user, info, stat) => {
+    if (err || !user)
+      return res.status(500).json({ error: "Failed to authenticate" });
+    req.logIn(user, err => {
+      if (err) return next(err);
+
+      return res.status(200).json({ payload: user });
+    });
+  })(req, res, next);
+};
+const simpleLogin = (passport, req, res, next) => {
+  passport.authenticate("simple-login", (err, user, info, stat) => {
+    console.log(
+      `simple login err: ${JSON.stringify(
+        err,
+        null,
+        2
+      )}, user: ${JSON.stringify(user, null, 2)}`
+    );
+    if (err || !user) {
+      return res.redirect("back");
+    }
+    req.logIn(user, err => {
+      if (err) return next(err);
+
+      if (user.isReferee) {
+        return res.redirect("/referee");
+      } else {
+        return res.redirect("/competitor");
+      }
+    });
+  })(req, res, next);
+};
+
+module.exports = {
+  simpleLoginApi,
+  simpleLogin
+};

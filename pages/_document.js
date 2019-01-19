@@ -1,8 +1,8 @@
-import React from 'react';
-import JssProvider from 'react-jss/lib/JssProvider';
-import Document, { Head, Main, NextScript } from 'next/document';
+import React from "react";
+import JssProvider from "react-jss/lib/JssProvider";
+import Document, { Head, Main, NextScript } from "next/document";
 
-import getContext from '../lib/context';
+import getContext from "../lib/context";
 
 class MyDocument extends Document {
   render() {
@@ -10,24 +10,22 @@ class MyDocument extends Document {
       <html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
           <meta name="google" content="notranslate" />
           <meta name="theme-color" content="#1976D2" />
 
-          <link
-            rel="shortcut icon"
-            href="https://storage.googleapis.com/builderbook/favicon32.png"
-          />
+          <link rel="shortcut icon" href="/favicon.ico" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Muli:300,400:latin"
           />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <link
             rel="stylesheet"
-            href="https://storage.googleapis.com/builderbook/nprogress.min.css"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
-          <link rel="stylesheet" href="https://storage.googleapis.com/builderbook/vs.min.css" />
 
           <style>
             {`
@@ -62,12 +60,12 @@ class MyDocument extends Document {
         </Head>
         <body
           style={{
-            font: '16px Muli',
-            color: '#222',
-            margin: '0px auto',
-            fontWeight: '300',
-            lineHeight: '1.5em',
-            backgroundColor: '#F7F9FC',
+            font: "16px Muli",
+            color: "#222",
+            margin: "0px auto",
+            fontWeight: "300",
+            lineHeight: "1.5em",
+            backgroundColor: "#F7F9FC"
           }}
         >
           <Main />
@@ -97,10 +95,10 @@ MyDocument.getInitialProps = ({ renderPage }) => {
         id="jss-server-side"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
-          __html: pageContext.sheetsRegistry.toString(),
+          __html: pageContext.sheetsRegistry.toString()
         }}
       />
-    ),
+    )
   };
 };
 

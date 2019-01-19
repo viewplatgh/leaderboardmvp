@@ -1,21 +1,9 @@
-import { Component } from "react";
-import Head from "next/head";
+import { Fragment } from "react";
 import Button from "@material-ui/core/Button";
-
-import withAuth from "../lib/withAuth";
-import withLayout from "../lib/withLayout";
 import { styleLoginButton } from "../lib/SharedStyles";
-
 import { login } from "../utils/auth";
 
-class Login extends Component {
-  static getInitialProps({ req }) {
-    const apiUrl = process.browser
-      ? `https://${window.location.host}/api/login.js`
-      : `https://${req.headers.host}/api/login.js`;
-
-    return { apiUrl };
-  }
+export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,6 +11,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleChange(event) {
     this.setState({ username: event.target.value });
   }
@@ -38,31 +27,26 @@ class Login extends Component {
 
   render() {
     return (
-      <div style={{ textAlign: "center", margin: "0 20px" }}>
-        <Head>
-          <title>Log in to Leader Board</title>
-          <meta name="description" content="Login page for leaderboard" />
-        </Head>
-        <br />
-        <p style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}>
-          Log in
-        </p>
+      <Fragment>
         <div className="login">
-          <form onSubmit={this.handleSubmit}>
+          <form method="post" action="/login">
             <label htmlFor="username">GitHub username</label>
 
             <input
               type="text"
               id="username"
               name="username"
-              value={this.state.username}
+              value={this.props.username}
               onChange={this.handleChange}
             />
+            <input type="hidden" name="password" value="password" />
 
-            <button type="submit">Login</button>
+            <Button variant="contained" style={styleLoginButton} type="submit">
+              Login
+            </Button>
 
             <p className={`error ${this.state.error && "show"}`}>
-              {this.state.error && `Error: ${this.state.error}`}
+              {this.props.error && `Error: ${this.state.error}`}
             </p>
           </form>
         </div>
@@ -101,9 +85,7 @@ class Login extends Component {
             display: block;
           }
         `}</style>
-      </div>
+      </Fragment>
     );
   }
 }
-
-export default withAuth(withLayout(Login), { logoutRequired: true });
