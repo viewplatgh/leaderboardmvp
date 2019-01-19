@@ -155,12 +155,13 @@ module.exports = (schema, options) => {
   schema.statics.authenticate = function() {
     var self = this;
     return function(username, password, callback) {
-      console.log("self.findByUsername(username, async function(err, user) {");
+      console.log("Starting simple authenticating");
       self.findByUsername(username, async function(err, user) {
         if (err) {
           return callback(err);
         }
         if (user) {
+          console.log("Existing user found, authenticating succeeded");
           return callback(null, user);
         } else {
           const url = `https://api.github.com/users/${username}`;
@@ -168,7 +169,7 @@ module.exports = (schema, options) => {
           try {
             const response = await fetch(url);
             if (response.ok) {
-              console.log("Github fetch ok");
+              console.log("Github fetch succeeded");
               const jsonProfile = await response.json();
               self.createUser(
                 {
@@ -262,7 +263,7 @@ module.exports = (schema, options) => {
   };
 
   schema.statics.createUser = function(user, callback) {
-    console.log("schema.statics.createUser");
+    console.log("Creating a new user");
     let newUser = new this({
       createdAt: new Date(),
       ...user
@@ -321,7 +322,6 @@ module.exports = (schema, options) => {
   };
 
   schema.statics.createStrategy = function() {
-    console.log("schema.statics.createStrategy = function() { called");
     return new LocalStrategy(options, this.authenticate());
   };
 };

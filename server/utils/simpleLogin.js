@@ -12,13 +12,14 @@ const simpleLoginApi = (passport, req, res, next) => {
 const simpleLogin = (passport, req, res, next) => {
   passport.authenticate("simple-login", (err, user, info, stat) => {
     console.log(
-      `simple login err: ${JSON.stringify(
+      `Hitting simple login callback, err: ${JSON.stringify(
         err,
         null,
         2
       )}, user: ${JSON.stringify(user, null, 2)}`
     );
     if (err || !user) {
+      console.log("Simple login failed");
       return res.redirect("back");
     }
     req.logIn(user, err => {

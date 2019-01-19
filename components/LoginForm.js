@@ -28,6 +28,9 @@ export default class LoginForm extends React.Component {
   render() {
     return (
       <Fragment>
+        <p style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}>
+          Log in
+        </p>
         <div className="login">
           <form method="post" action="/login">
             <label htmlFor="username">GitHub username</label>
@@ -40,6 +43,11 @@ export default class LoginForm extends React.Component {
               onChange={this.handleChange}
             />
             <input type="hidden" name="password" value="password" />
+
+            <label style={{ textAlign: "left" }}>
+              <input type="checkbox" name="isreferee" value="value" />
+              <span>&nbsp;&nbsp;is referee</span>
+            </label>
 
             <Button variant="contained" style={styleLoginButton} type="submit">
               Login

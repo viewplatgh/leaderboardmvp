@@ -42,9 +42,6 @@ class Index extends React.Component {
           <meta name="description" content="Login page for leaderboard" />
         </Head>
         <br />
-        <p style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}>
-          Log in
-        </p>
         {!user && <LoginForm {...this.props} />}
       </div>
     );

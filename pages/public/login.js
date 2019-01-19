@@ -44,9 +44,6 @@ class Login extends Component {
           <meta name="description" content="Login page for leaderboard" />
         </Head>
         <br />
-        <p style={{ margin: "45px auto", fontSize: "44px", fontWeight: "400" }}>
-          Log in
-        </p>
         <LoginForm />
       </div>
     );
