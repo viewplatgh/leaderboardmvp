@@ -6,7 +6,7 @@ const Contest = require("../models/Contest");
 const leaderboard = "australianfootballleague";
 const users = ["yagiz", "sindresorhus", "ulid", "pjialin"];
 
-const generateLeaderboard = async Promise => {
+const generateLeaderboard = async () => {
   const yagiz = await User.findOne({ username: "yagiz" }).exec();
   const sindresorhus = await User.findOne({ username: "sindresorhus" }).exec();
   const ulid = await User.findOne({ username: "ulid" }).exec();

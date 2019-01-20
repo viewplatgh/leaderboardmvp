@@ -20,18 +20,3 @@ export const create = async ({ displayName, url }) => {
     throw new Error(error);
   }
 };
-
-export const fetchAll = async ({ url }) => {
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" }
-    });
-    if (response.ok) {
-      return response.json();
-    }
-  } catch (error) {
-    console.error("Failed to fetch all data", error);
-    throw new Error(error);
-  }
-};

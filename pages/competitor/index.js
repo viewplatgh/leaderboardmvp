@@ -5,19 +5,28 @@ import Button from "@material-ui/core/Button";
 import withAuth from "../../lib/withAuth";
 import withLayout from "../../lib/withLayout";
 import { styleLoginButton } from "../../lib/SharedStyles";
+import Leaderboard from "../../components/Leaderboard";
 
 class Dashboard extends Component {
   static getInitialProps({ req }) {
     const apiUrl = process.browser
-      ? `//${window.location.host}/api/v1/login`
-      : `//${req.headers.host}/api/v1/login`;
-
+      ? `//${window.location.host}/api/v1/oneleaderboard`
+      : `//${req.headers.host}/api/v1/oneleaderboard`;
     return { apiUrl };
   }
   constructor(props) {
     super(props);
 
-    this.state = { username: "", error: "" };
+    this.state = { leaderboard: null };
+  }
+
+  async componentDidMount() {
+    const resp = await fetch(this.props.apiUrl, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+    const lb = await resp.json();
+    return this.setState({ leaderboard: lb });
   }
 
   render() {
@@ -27,6 +36,7 @@ class Dashboard extends Component {
           <title>Dashboard of Leader Board</title>
           <meta name="description" content="Dashboard for leaderboard" />
         </Head>
+        <Leaderboard {...this.state.leaderboard} />
       </div>
     );
   }

@@ -9,7 +9,8 @@ import withAuth from "../lib/withAuth";
 import withLayout from "../lib/withLayout";
 import { styleLoginButton } from "../lib/SharedStyles";
 import LoginForm from "../components/LoginForm";
-
+import Leaderboard from "../components/Leaderboard";
+// import fetch from "isomorphic-unfetch";
 class Index extends React.Component {
   static propTypes = {
     user: PropTypes.shape({
@@ -21,12 +22,25 @@ class Index extends React.Component {
     user: null
   };
 
-  static getInitialProps({ req }) {
-    return {};
+  static async getInitialProps({ req }) {
+    const apiUrl = process.browser
+      ? `//${window.location.host}/api/v1/oneleaderboard`
+      : `//${req.headers.host}/api/v1/oneleaderboard`;
+    return { apiUrl };
   }
 
   constructor(props) {
     super(props);
+    this.state = { leaderboard: null };
+  }
+
+  async componentDidMount() {
+    const resp = await fetch(this.props.apiUrl, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" }
+    });
+    const lb = await resp.json();
+    return this.setState({ leaderboard: lb });
   }
 
   render() {
@@ -39,6 +53,7 @@ class Index extends React.Component {
         </Head>
         <br />
         {!user && <LoginForm {...this.props} />}
+        <Leaderboard {...this.state.leaderboard} />
       </div>
     );
   }

@@ -110,7 +110,7 @@ app.prepare().then(() => {
   });
 
   // DEBUG: generating data for demo:
-  generateLeaderboard(mongoose.Promise);
+  generateLeaderboard();
 
   // starting express server
   server.listen(port, err => {
