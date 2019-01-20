@@ -11,10 +11,10 @@ const mongoSchema = new Schema({
   },
   leaderboard: { type: Schema.Types.ObjectId, ref: "Leaderboard" },
   competitors: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  winner: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  drawer: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  loser: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  round: Number
+  winners: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  drawers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  losers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  round: { type: Number, default: 0 }
 });
 
 class ContestClass {
@@ -25,9 +25,9 @@ class ContestClass {
       "createdAt",
       "leaderboard",
       "competitors",
-      "winner",
-      "drawer",
-      "loser",
+      "winners",
+      "drawers",
+      "losers",
       "round"
     ];
   }
@@ -36,18 +36,18 @@ class ContestClass {
     displayName,
     leaderboard,
     competitors,
-    winner,
-    drawer,
-    loser
+    winners,
+    drawers,
+    losers
   }) {
     const newContest = await this.create({
       createdAt: new Date(),
       displayName,
       leaderboard,
       competitors,
-      winner,
-      drawer,
-      loser
+      winners,
+      drawers,
+      losers
     });
 
     return _.pick(newContest, ContestClass.publicFields());

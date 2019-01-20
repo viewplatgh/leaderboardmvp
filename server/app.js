@@ -11,6 +11,9 @@ const { join } = require("path");
 const api = require("./api");
 const { simpleLogin } = require("./utils/simpleLogin");
 const User = require("./models/User");
+const generateLeaderboard = require("./utils/generateLeaderboard");
+
+mongoose.Promise = require("bluebird");
 
 require("dotenv").config();
 
@@ -105,6 +108,10 @@ app.prepare().then(() => {
       handle(req, res);
     }
   });
+
+  // DEBUG: generating data for demo:
+  generateLeaderboard(mongoose.Promise);
+
   // starting express server
   server.listen(port, err => {
     if (err) throw err;

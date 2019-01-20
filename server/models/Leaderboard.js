@@ -50,7 +50,7 @@ class LeaderboardClass {
     console.log("Creating one leaderboard");
     const newLeaderboard = await this.create({
       createdAt: new Date(),
-      name: displayName.replace(" ", "").toLowerCase(),
+      name: displayName.replace(/\s/g, "").toLowerCase(),
       displayName
     });
 
