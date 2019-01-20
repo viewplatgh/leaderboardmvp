@@ -16,7 +16,11 @@ const simpleLogin = (passport, req, res, next) => {
         err,
         null,
         2
-      )}, user: ${JSON.stringify(user, null, 2)}`
+      )}, user: ${JSON.stringify(
+        { username: user.username, displayname: user.displayName },
+        null,
+        2
+      )}`
     );
     if (err || !user) {
       console.log("Simple login failed");

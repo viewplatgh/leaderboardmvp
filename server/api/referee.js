@@ -1,5 +1,7 @@
 const express = require("express");
 
+const LeaderboardClass = require("../models/Leaderboard");
+
 const dev = process.env.NODE_ENV !== "production";
 
 const router = express.Router();
@@ -12,19 +14,19 @@ router.use((req, res, next) => {
 });
 
 router.get("/leaderboards", async (req, res) => {
-  res.json({});
+  const leaderboards = await LeaderboardClass.find({});
+  res.status(200).json(leaderboards);
 });
 
-router.post("/leaderboards/add", async (req, res) => {
+router.post("/leaderboards/create", async (req, res) => {
   try {
-    // const leaderboard = await Leaderboard.add(
-    //   Object.assign({ userId: req.user.id }, req.body)
-    // );
-    // res.json(book);
-    res.json({});
+    const leaderboard = await LeaderboardClass.createOne({
+      displayName: req.body.displayName
+    });
+    res.status(200).json(leaderboard);
   } catch (err) {
     logger.error(err);
-    res.json({ error: err.message || err.toString() });
+    res.status(500).json({ error: err.message || err.toString() });
   }
 });
 

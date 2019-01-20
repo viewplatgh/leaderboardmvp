@@ -32,25 +32,27 @@ class MenuDrop extends React.Component {
     return (
       <div>
         <table style={{ float: "right" }}>
-          <tr>
-            <td>Welcome! {displayName}</td>
-            <td>
-              {" "}
-              <Avatar
-                role="presentation"
-                aria-owns="simple-menu"
-                aria-haspopup="true"
-                onClick={this.handleClick}
-                onKeyPress={this.handleClick}
-                src={src}
-                alt={alt}
-                style={{ margin: "0px 20px 0px auto", cursor: "pointer" }}
-              />
-            </td>
-            <td>
-              <a href="/logout">Log out</a>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Welcome! {displayName}</td>
+              <td>
+                {" "}
+                <Avatar
+                  role="presentation"
+                  aria-owns="simple-menu"
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                  onKeyPress={this.handleClick}
+                  src={src}
+                  alt={alt}
+                  style={{ margin: "0px 20px 0px auto", cursor: "pointer" }}
+                />
+              </td>
+              <td>
+                <a href="/logout">Log out</a>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <Menu
           id="simple-menu"

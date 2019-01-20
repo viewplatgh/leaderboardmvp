@@ -34,31 +34,30 @@ function Header({ user }) {
             {user ? (
               <div>
                 <Hidden smDown>
-                  <Link prefetch href="/">
-                    <a
-                      style={{ marginRight: "20px" }}
-                      href={user.isReferee ? "/referee" : "/competitor"}
-                    >
-                      {user.isReferee
-                        ? "Referee Dashboard"
-                        : "Competitor Dashboard"}
-                    </a>
-                  </Link>
+                  <a
+                    style={{ marginRight: "20px" }}
+                    href={user.isReferee ? "/referee" : "/competitor"}
+                  >
+                    {user.isReferee
+                      ? "Referee Dashboard"
+                      : "Competitor Dashboard"}
+                  </a>
                 </Hidden>
               </div>
-            ) : (
-              <Link prefetch href="/">
-                <a>
-                  <Avatar
-                    src="/logo.jpg"
-                    alt="Leader board"
-                    style={{ margin: "0px auto 0px 20px" }}
-                  />
-                </a>
-              </Link>
-            )}
+            ) : null}
           </Grid>
-          <Grid item sm={7} xs={8} style={{ textAlign: "left" }}>
+          <Grid item sm={1} xs={1}>
+            <Link prefetch href="/">
+              <a>
+                <Avatar
+                  src="/logo.jpg"
+                  alt="Leader board"
+                  style={{ margin: "0px auto 0px 20px" }}
+                />
+              </a>
+            </Link>
+          </Grid>
+          <Grid item sm={6} xs={7} style={{ textAlign: "left" }}>
             <h2>
               <a href="/">Leader Board by Rob</a>
             </h2>
@@ -90,7 +89,7 @@ function Header({ user }) {
 Header.propTypes = {
   user: PropTypes.shape({
     avatarUrl: PropTypes.string,
-    email: PropTypes.string.isRequired
+    email: PropTypes.string
   })
 };
 

@@ -6,6 +6,9 @@ import withAuth from "../../lib/withAuth";
 import withLayout from "../../lib/withLayout";
 import { styleLoginButton } from "../../lib/SharedStyles";
 
+import LeaderboardList from "../../components/LeaderboardList";
+import CreateLeaderboardForm from "../../components/CreateLeaderboardForm";
+
 import { login } from "../../utils/auth";
 
 class Dashboard extends Component {
@@ -29,6 +32,9 @@ class Dashboard extends Component {
           <title>Dashboard of Leader Board</title>
           <meta name="description" content="Dashboard for leaderboard" />
         </Head>
+        <br />
+        <LeaderboardList />
+        <CreateLeaderboardForm />
       </div>
     );
   }

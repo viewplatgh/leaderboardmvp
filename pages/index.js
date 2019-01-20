@@ -13,7 +13,7 @@ import LoginForm from "../components/LoginForm";
 class Index extends React.Component {
   static propTypes = {
     user: PropTypes.shape({
-      email: PropTypes.string.isRequired
+      email: PropTypes.string
     })
   };
 
@@ -22,11 +22,7 @@ class Index extends React.Component {
   };
 
   static getInitialProps({ req }) {
-    const apiUrl = process.browser
-      ? `//${window.location.host}/api/v1/login`
-      : `//${req.headers.host}/api/v1/login`;
-
-    return { apiUrl };
+    return {};
   }
 
   constructor(props) {

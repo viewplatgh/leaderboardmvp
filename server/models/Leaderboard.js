@@ -12,12 +12,20 @@ const mongoSchema = new Schema({
     type: Date,
     required: true
   },
-  email: {
-    type: String
-  },
   competitors: [{ type: Schema.Types.ObjectId, ref: "User" }],
   displayName: String,
-  avatarUrl: String,
+  winPoints: {
+    type: Number,
+    default: 3
+  },
+  drawPoints: {
+    type: Number,
+    default: 1
+  },
+  lossPoints: {
+    type: Number,
+    default: 0
+  },
   subscribeRequired: {
     type: Boolean,
     default: false
@@ -29,14 +37,17 @@ class LeaderboardClass {
     return [
       "id",
       "name",
+      "createdAt",
       "displayName",
-      "email",
-      "avatarUrl",
+      "winPoints",
+      "drawPoints",
+      "lossPoints",
       "subscribeRequired"
     ];
   }
 
-  static async createLeaderboard({ displayName }) {
+  static async createOne({ displayName }) {
+    console.log("Creating one leaderboard");
     const newLeaderboard = await this.create({
       createdAt: new Date(),
       name: displayName.replace(" ", "").toLowerCase(),
