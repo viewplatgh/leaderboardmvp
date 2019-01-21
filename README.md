@@ -1,5 +1,7 @@
 # Leader Board by Rob Lao
 
+[![Build Status](https://travis-ci.org/viewplatgh/leaderboardmvp.svg?branch=master)](https://travis-ci.org/viewplatgh/leaderboardmvp)
+
 ## Steps to run locally
 
 ```
@@ -23,20 +25,27 @@ GLHF!
 3. Is the implementation, data model and code organisation of a standard that matches the level of the position you are applying for
 
 ## Scenario
+
 The overwhelming majority of Sports, Games and gamified concepts have leaderboards. ACME Startup sees an opportunity to make it easy for other organisations to add a leaderboard feature set to their software products. ACME Startup wants to demonstrate to the market what their idea has to offer so invest in building a simple leaderboard application. Leaderboard data will be submitted by authenticated users and Leaderboards can viewed by the public or by private invitation. If this leaderboard product is validated by the market, the business wants to create a SaaS out of it and ideally would like to avoid rework and focus on enhancing the feature set.
 
 ## Logical Structures
+
 #### Competitor
+
 A Competitor is a participant in a Contest. By engaging in a Contest, a Competitor may acquire points.
 
 #### Head to Head Contest
+
 A Head to Head (H2H) Contest defines a time when two Competitors compete to see who wins. Based on the final score card, a Competitor will receive the most points for a win, less points for a draw and the least points for a loss.
 
 #### Leaderboard
+
 A Leaderboard contains a complete list of Competitors who will engage in H2H Contents in a Round Robin format. The leaderboard aggregates the total points from all H2H Contests that have completed.
 
 #### Referees
+
 Referees adjudicates a H2H Contest, ensuring that Competitors are playing in accordance with the rules. Referees are also the authority for registering the score. Therefore, Referees are authenticated users of the leaderboard service, find the matching H2H Contest and input the final score.
 
 #### Subscribers
+
 Subscribers are users that want to view Leaderboards they are interested in. They can view any public Leaderboard as well as any private Leaderboard by invitation.
